@@ -1,5 +1,5 @@
 import random
-
+import time
 #essentially my goal here to generate a solvable sudoku and then put in random zeros 
 
 #intitializing the grid
@@ -73,7 +73,7 @@ def generate_solution(sudokugrid):
     return False  
 
 
-def insert_zeros(sudokugrid, zeros_count): #function to insert 0
+def insert_zeros(sudokugrid, zeros_count): #function to insert 0s you can change the number of zeros in the next if statement
     """function to insert 0s at random 
 
     Args:
@@ -81,6 +81,13 @@ def insert_zeros(sudokugrid, zeros_count): #function to insert 0
         zeros_count (_type_): The amount of zeros you want. 64 is the maximum amt of zeros possible to still be solvable I think 
     """
     count = 0 
+    
+    try:
+        zeros_count = int(input("How many empty cells would you like? Maximum of 64 (hardest)\n"))
+    except:
+        print("error, did not enter int, giving you maximum difficulty")
+        time.sleep(4)
+        
     if zeros_count > 64: 
         zeros_count = 64
         print("zeros count cannot exceed 64")
@@ -93,10 +100,10 @@ def insert_zeros(sudokugrid, zeros_count): #function to insert 0
     
         
 if generate_solution(sudokugrid):
-    insert_zeros(sudokugrid, 80)
+    insert_zeros(sudokugrid, 80) #change the second int value to whatever\
+    print("random sudoku board, try to solve it!: ")
     for row in sudokugrid:
         print(row)  
-    print(sudokugrid)         
 else:
     print("No solution exists.")
     
@@ -117,7 +124,11 @@ def solve_sudoku (sudokugrid):
             
     return False
 
-if solve_sudoku(sudokugrid):
+keyword = input('Type "solve" if you want the solution \n')
+while keyword.lower() != "solve":
+    keyword = input('Type "solve" if you want the solution \n')
+
+if solve_sudoku(sudokugrid) and keyword.lower() == "solve":
     print("Sudoku puzzle solved")
     for row in sudokugrid:
         print(row)
